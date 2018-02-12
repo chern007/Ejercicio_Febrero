@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.provider.Telephony;
@@ -18,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -29,9 +27,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     WifiManager wifiManager;
     int estadoWifi;
     IntentFilter filtroBroadSMS;
-    BroadcastReceiver miBroad;
     BroadcastReceiver escuchadorSMS;
     Spinner spnImagenFondo;
+
+    IntentFilter filtroBroadCargador;
+    BroadcastReceiver escuchadorCargador;
+
+    IntentFilter filtroBroadBT;
+    BroadcastReceiver escuchadorBT;
 
 
     @Override
@@ -47,21 +50,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
 
-//        IntentFilter filtroWIFI = new IntentFilter();
-//        filtroWIFI.addAction("android.net.wifi.WIFI_STATE_CHANGED");
-//        filtroWIFI.addAction("android.net.wifi.STATE_CHANGE");
 
-//        BroadcastReceiver escuchadorWIFI = new BroadcastReceiver() {
-//            @Override
-//            public void onReceive(Context context, Intent intent) {
-//                //Toast.makeText(null, "Algo ha pasado con el wifi.", Toast.LENGTH_SHORT).show();
-//                sacaMensaje();
-//            }
-//        };
-//
-//        registerReceiver(escuchadorWIFI,filtroWIFI);
-
-        //***
 
 
         //cargamos los elementos que estan el Strings en el spinner*********************************
@@ -72,19 +61,49 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spnImagenFondo.setOnItemSelectedListener(this);//ponemos a escuchas el spinner
         //******************************************************************************************
 
-
+        //1)
         filtroBroadSMS = new IntentFilter();
         filtroBroadSMS.addAction(Telephony.Sms.Intents.SMS_RECEIVED_ACTION);
         escuchadorSMS = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                //Toast.makeText(null, "Algo ha pasado con el wifi.", Toast.LENGTH_SHORT).show();
+
                 sacaMensaje2();
             }
         };
 
+        //2)
+        filtroBroadCargador = new IntentFilter();
+        filtroBroadCargador.addAction("android.intent.action.ACTION_POWER_CONNECTED");
+        escuchadorCargador = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                cableCONECTADO();
+            }
+        };
+
+        //3)
+        filtroBroadBT = new IntentFilter();
+        //filtroBroadBT.addAction(BluetoothAdapter.ACTION_STATE_CHANGED);
+        filtroBroadBT.addAction("android.bluetooth.adapter.action.STATE_CHANGED");
+        escuchadorBT = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+
+                cableCONECTADO();
+            }
+        };
+
+
+
+
+
         estadoWifi = wifiManager.getWifiState();
         Toast.makeText(this, "Estado del WIFI = " + estadoWifi, Toast.LENGTH_LONG).show();
+
+
+
 
     }
 
@@ -94,8 +113,28 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onResume();
 
         registerReceiver(escuchadorSMS, filtroBroadSMS);
+        registerReceiver(escuchadorCargador, filtroBroadCargador);
+        registerReceiver(escuchadorBT,filtroBroadBT);
 
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        unregisterReceiver(escuchadorSMS);
+        unregisterReceiver(escuchadorCargador);
+        unregisterReceiver(escuchadorBT);
+
+    }
+
+    public void cableCONECTADO() {
+
+        Toast.makeText(this, "Se ha conectado el cable de carga.", Toast.LENGTH_SHORT).show();
+    }
+
+
+
 
     public void actividad_2(View view) {
         Intent tmp = new Intent();
@@ -105,6 +144,13 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Intent actividad2 = new Intent(this, actividad_2.class);
         actividad2.putExtra("imagen", spnImagenFondo.getSelectedItem().toString());
         startActivity(actividad2);
+
+    }
+
+    public void actividad_3(View view) {
+
+        Intent actividad_3 = new Intent(this, actividad_3.class);
+        startActivity(actividad_3);
 
     }
 
@@ -218,3 +264,4 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 }
+
