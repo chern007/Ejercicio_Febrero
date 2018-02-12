@@ -8,6 +8,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.Telephony;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         };
 
 
-
+        String path = Environment.getExternalStorageDirectory().toString();
 
 
         estadoWifi = wifiManager.getWifiState();
