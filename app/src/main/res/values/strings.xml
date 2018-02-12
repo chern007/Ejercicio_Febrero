@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Ejercicio_Febrero</string>
+
+
+    <string-array name="fondosParaImagen">
+        <item>""</item>
+        <item>Imagen Fibra</item>
+        <item>Imagen Fútbol</item>
+        <item>Fórmula 1</item>
+    </string-array>
 </resources>
