@@ -103,9 +103,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         estadoWifi = wifiManager.getWifiState();
         Toast.makeText(this, "Estado del WIFI = " + estadoWifi, Toast.LENGTH_LONG).show();
 
-
-
-
     }
 
 
@@ -142,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         tmp.setAction(Telephony.Sms.Intents.SMS_RECEIVED_ACTION);
         sendBroadcast(tmp);
 
+
         Intent actividad2 = new Intent(this, actividad_2.class);
         actividad2.putExtra("imagen", spnImagenFondo.getSelectedItem().toString());
         startActivity(actividad2);
@@ -166,7 +164,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void sacaMensaje2() {
 
         Toast.makeText(this, "Has recivido un SMS???", Toast.LENGTH_SHORT).show();
-        unregisterReceiver(escuchadorSMS);//apagamos el listener
     }
 
 
