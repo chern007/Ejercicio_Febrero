@@ -104,13 +104,14 @@
         app:layout_constraintTop_toBottomOf="@+id/btWIFIon" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/chkChequeo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="-3dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="88dp"
-        android:text="CheckBox"
+        android:layout_marginTop="92dp"
+        android:onClick="checkedChequeo"
+        android:text="Chequeo"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btWIFIon" />
 
@@ -126,8 +127,8 @@
 
     <Button
         android:id="@+id/bt3"
-        android:layout_width="51dp"
-        android:layout_height="35dp"
+        android:layout_width="49dp"
+        android:layout_height="41dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="28dp"
         android:onClick="actividad_3"

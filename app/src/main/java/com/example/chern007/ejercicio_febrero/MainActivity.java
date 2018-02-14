@@ -2,6 +2,7 @@ package com.example.chern007.ejercicio_febrero;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
@@ -10,11 +11,13 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.Telephony;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -30,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     IntentFilter filtroBroadSMS;
     BroadcastReceiver escuchadorSMS;
     Spinner spnImagenFondo;
+    CheckBox chkChequeo;
 
     IntentFilter filtroBroadCargador;
     BroadcastReceiver escuchadorCargador;
@@ -47,6 +51,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         imagenPie = (ImageView) findViewById(R.id.imgPie);
         cambioEstadoWIfi = (EditText) findViewById(R.id.txtWIFIchanged);
         spnImagenFondo = (Spinner) findViewById(R.id.spnImagenFondo);
+        chkChequeo = (CheckBox) findViewById(R.id.chkChequeo);
 
 
         wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
@@ -125,6 +130,36 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         unregisterReceiver(escuchadorBT);
 
     }
+
+
+    public void checkedChequeo(View view) {
+
+        Toast.makeText(this, "Se ha conectado el cable de carga.", Toast.LENGTH_SHORT).show();
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // Add the buttons
+
+        builder.setMessage("Esto es un dialogo de prueba");
+
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                dialog.dismiss();
+            }
+        });
+        // Set other dialog properties
+
+
+        // Create the AlertDialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+
 
     public void cableCONECTADO() {
 
